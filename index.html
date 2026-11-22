@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141517" media="(prefers-color-scheme: dark)">
+  <title>トークテーマカード</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <h1>トークテーマカード</h1>
+      <div class="topbar-actions">
+        <button type="button" id="btn-log" class="chip-btn">記録 <span id="log-count" class="count">0</span></button>
+        <button type="button" id="btn-settings" class="chip-btn" aria-label="設定">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M19.4 13a7.6 7.6 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.4 7.4 0 0 0-1.7-1L15 3.5h-4L10.7 6a7.4 7.4 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.6a7.6 7.6 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.4 7.4 0 0 0 1.7 1l.3 2.5h4l.3-2.5a7.4 7.4 0 0 0 1.7-1l2.4 1 2-3.4zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg>
+          設定
+        </button>
+      </div>
+    </header>
+
+    <main class="table">
+      <div id="stage" class="stage">
+        <div id="deck" class="deck" aria-hidden="true"></div>
+        <p id="empty-msg" class="empty-msg" hidden>条件に合う質問がありません。<br>「設定」でフィルターを見直してください。</p>
+      </div>
+      <p id="guide" class="guide" aria-live="polite"></p>
+    </main>
+
+    <footer class="controls">
+      <button type="button" id="btn-undo" class="btn ghost" aria-label="ひとつ戻す">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3"/></svg>
+      </button>
+      <button type="button" id="btn-pass" class="btn">✕ パス</button>
+      <button type="button" id="btn-main" class="btn primary">引く</button>
+    </footer>
+    <p id="status" class="status"></p>
+  </div>
+
+  <dialog id="dlg-settings" class="sheet" aria-labelledby="settings-title">
+    <div class="sheet-head">
+      <h2 id="settings-title">設定</h2>
+      <button type="button" class="close-btn" data-close>閉じる</button>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="filter-heavy">
+      <span class="switch-track" aria-hidden="true"></span>
+      <span class="switch-label">重めの質問を除く</span>
+    </label>
+    <fieldset class="filter-group">
+      <legend>段階</legend>
+      <label><input type="checkbox" name="level" value="1"> ○ 軽め</label>
+      <label><input type="checkbox" name="level" value="2"> △ 中間</label>
+      <label><input type="checkbox" name="level" value="3"> ◇ 深め</label>
+    </fieldset>
+    <fieldset class="filter-group">
+      <legend>出典</legend>
+      <label><input type="checkbox" name="source" value="aron1997"> 36の質問</label>
+      <label><input type="checkbox" name="source" value="suzuki"> ディープトーク定番</label>
+    </fieldset>
+    <div class="sheet-note">
+      <p><b>36の質問</b>：Aron, A., Melinat, E., Aron, E. N., Vallone, R. D., &amp; Bator, R. J. (1997). The experimental generation of interpersonal closeness: A procedure and some preliminary findings. <i>Personality and Social Psychology Bulletin</i>, 23(4), 363–377. 付録の質問を独自に日本語訳したものです。段階（軽め・中間・深め）は原典の Set I・II・III に対応します。</p>
+      <p><b>ディープトーク定番</b>：『最強のコミュ力の作り方』で、ディープトーク研究で使われた定番の質問として紹介されているものを言い換えて収録しています。</p>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-log" class="sheet" aria-labelledby="log-title">
+    <div class="sheet-head">
+      <h2 id="log-title">今夜の記録</h2>
+      <button type="button" class="close-btn" data-close>閉じる</button>
+    </div>
+    <p id="log-summary" class="log-summary"></p>
+    <h3 class="log-heading">話したカード</h3>
+    <ol id="log-talked" class="log-list"></ol>
+    <details class="log-passed">
+      <summary>パスしたカード（<span id="log-passed-count">0</span>枚）</summary>
+      <ol id="log-passed" class="log-list"></ol>
+    </details>
+    <button type="button" id="btn-reset-log" class="btn danger-outline">記録を消去</button>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="questions.js"></script>
+  <script src="gesture.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
