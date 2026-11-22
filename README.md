@@ -94,3 +94,6 @@ node tests/logic.test.js
 
 ## 公開（GitHub Pages）
 このリポジトリは、**Settings → Pages** で、Source を「Deploy from a branch」、ブランチを `main`、フォルダを `/ (root)` にすると公開できます。
+
+## ライセンス
+[MIT License](LICENSE) です。コードと、独自の日本語訳・言い換えの質問文が対象です。質問のもとになった研究や書籍の権利は、それぞれの著者に帰属します。
