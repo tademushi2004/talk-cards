@@ -638,6 +638,16 @@
     });
   }
 
+  // ---------- 画面の拡大を止める（iPhone の Safari 対策） ----------
+  // iOS 10 以降の Safari は、viewport の user-scalable=no を無視してピンチ拡大を許すため、
+  // 専用の gesture イベントと、2本指のタッチ操作を止める。
+  ["gesturestart", "gesturechange", "gestureend"].forEach(function (type) {
+    document.addEventListener(type, function (e) { e.preventDefault(); });
+  });
+  document.addEventListener("touchmove", function (e) {
+    if (e.touches && e.touches.length > 1) e.preventDefault();
+  }, { passive: false });
+
   // ---------- 起動 ----------
   applySettingsToControls();
   els.heavy.addEventListener("change", onFilterChange);

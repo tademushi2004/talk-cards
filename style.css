@@ -65,6 +65,13 @@
 
 html, body { height: 100%; }
 
+/* ダブルタップでの拡大を止める（iPhone の Safari 対策）。
+   touch-action は継承されないので、タップする要素にも指定する。
+   スワイプで操作する .stage は touch-action: none のまま。 */
+html, body, button, label, summary, dialog, .sheet {
+  touch-action: manipulation;
+}
+
 body {
   margin: 0;
   background: var(--bg);
