@@ -647,6 +647,13 @@
   document.addEventListener("touchmove", function (e) {
     if (e.touches && e.touches.length > 1) e.preventDefault();
   }, { passive: false });
+  // カード部分のダブルタップ拡大を止める。
+  // iPhone の Safari は、カード部分に指定している touch-action: none ではダブルタップ拡大を止めないことがある。
+  // この領域の操作は pointer イベントで処理していて、click には頼っていない。
+  // pointer イベントは touchend より先に届くので、touchend を止めても、タップやスワイプの判定には影響しない。
+  els.stage.addEventListener("touchend", function (e) {
+    if (e.cancelable) e.preventDefault();
+  }, { passive: false });
 
   // ---------- 起動 ----------
   applySettingsToControls();
